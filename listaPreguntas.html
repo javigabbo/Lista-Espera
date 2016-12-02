@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Listado de Preguntas</title>
+
+    <style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+    </style>
+
+  </head>
+  <body onload="tablaPreguntas()">
+
+    <div class="container" style="margin-top:40px;">
+
+      <div class="text-center">
+        <h1>Lista de espera</h1><br>
+
+        <table>
+          <thead>
+            <tr>
+              <th>idPeticion</th>
+              <th>direccion IP</th>
+              <th>usuario</th>
+              <th>texto</th>
+              <th>abierta</th>
+              <th>fechaInicio</th>
+              <th>fechaFin</th>
+            </tr>
+          </thead>
+
+          <tbody id="tabla">
+
+
+
+        <script type="text/javascript">
+
+            setInterval('tablaPreguntas()', 5000);
+
+            function tablaPreguntas(){
+              var xmlhttp = new XMLHttpRequest();
+              var url = "consulta.php";
+
+              xmlhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                      var myArr = JSON.parse(this.responseText);
+
+
+                      var out = "";
+                      var i;
+                      for(i = 0; i < myArr.length; i++) {
+
+                          out+='<tr><td>'+myArr[i].idPeticion+'</td> <td>'+myArr[i].direccionIP+'</td> <td>'+myArr[i].usuario+'</td><td>'+myArr[i].texto+'</td><td>'+myArr[i].abierta+'</td><td>'+myArr[i].fechaInicio+'</td><td>'+myArr[i].fechaFin+'</td></tr>';
+
+                      }
+
+                      document.getElementById("tabla").innerHTML = out;
+                  }
+              };
+              xmlhttp.open("POST", url, true);
+              xmlhttp.send();
+
+            }
+
+        </script>
+
+      </tbody>
+    </table>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>

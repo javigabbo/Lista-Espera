@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Envía pregunta</title>
+  </head>
+  <body onload="infoDesplegable()">
+
+    <div class="container" style="margin-top:40px;">
+      <div class="text center">
+
+      <h1>Lista de espera</h1><br>
+
+
+
+        <div class="form-group">
+          <label for="clave">Nombre de usuario de U-Tad</label>
+          <div class="row">
+            <div class="col-lg-4">
+              <input type="text" class="form-control" name="usuario" id="usuario" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="nombre">Texto de la pregunta</label>
+          <div class="row">
+            <div class="col-lg-4">
+              <input type="text" class="form-control" name="pregunta" id="pregunta" required>
+            </div>
+          </div>
+        </div>
+
+        <button id="btnEnviar" class="btn btn-primary" onclick="enviarPOST()">Enviar pregunta</button>
+
+      <br><br>
+
+      <div style="margin-top: 30px">
+        <select name="" id="coso">
+
+
+
+
+    <script type="text/javascript">
+
+
+
+    function enviarPOST(){
+
+      var usuario = document.getElementById("usuario").value;
+      var pregunta = document.getElementById("pregunta").value;
+
+      var json_upload = "datos=" + JSON.stringify({usuario:usuario, pregunta:pregunta});
+      var url = "insert.php";
+      var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+      xmlhttp.open("POST", url);
+      xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+      var myObj = JSON.parse(this.responseText);
+
+      }else{
+      //alert("error: " + this.status);
+      }
+      };
+      xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xmlhttp.send(json_upload);
+      infoDesplegable();
+    }
+
+
+
+    function infoDesplegable(){
+      var xmlhttp = new XMLHttpRequest();
+      var url = "consulta.php";
+
+      xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              var myArr = JSON.parse(this.responseText);
+
+
+              var out = "";
+              var i;
+              for(i = 0; i < myArr.length; i++) {
+
+                  out+='<option value='+myArr[i].idPeticion+'>'+myArr[i].texto+'</option>';
+
+              }
+
+              document.getElementById("coso").innerHTML = out;
+          }
+      };
+      xmlhttp.open("POST", url, true);
+      xmlhttp.send();
+
+    }
+
+
+    function eliminaSeleccionado(){
+
+
+      var seleccionado = document.getElementById("coso").value;
+
+      var json_upload = "datos=" + JSON.stringify({idPeticion:seleccionado});
+      var url = "eliminarPregunta.php";
+      var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+      xmlhttp.open("POST", url);
+      xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        //alert(JSON.parse(this.responseText));
+
+      }else{
+      //alert("error: " + this.status);
+      }
+      };
+      xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xmlhttp.send(json_upload);
+      infoDesplegable();
+
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+      $.fn.serializeObject = function(){
+          var o = {};
+          var a = this.serializeArray();
+          $.each(a, function() {
+              if (o[this.name] !== undefined) {
+                  if (!o[this.name].push) {
+                      o[this.name] = [o[this.name]];
+                  }
+                  o[this.name].push(this.value || '');
+              } else {
+                  o[this.name] = this.value || '';
+              }
+          });
+
+          return o;
+      };
+
+      $(function() {
+
+      });
+
+
+      $('#btnEnviar').click(function() {
+
+    var nombreAlumno = $('#usuario').val();
+    var pregunta = $('#pregunta').val();
+
+        var datosJSON = JSON.stringify({usuario:nombreAlumno, pregunta:pregunta});
+    //      alert(datosJSON);
+
+        var json_upload = "datos = " + datosJSON;
+
+    //      alert(json_upload);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'insert.php');
+
+        xhr.onreadystatechange = function(){
+         if (this.readyState == 4 && this.status == 200){
+           alert(this.responseText);
+           var resp = JSON.parse(this.responseText);
+         }
+        };
+
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+        xhr.send(json_upload);
+
+
+          return false;
+      });
+
+
+*/
+
+
+
+    </script>
+
+
+  </select>
+  <br>
+  <button type="button" name="button" id="btnEliminarPregunta" onclick="eliminaSeleccionado()" class="btn-xs btn-danger" style="margin-top:5px">Eliminar Pregunta</button>
+  </div>
+  </div>
+
+  </div>
+
+
+
+
+  </body>
+</html>
