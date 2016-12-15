@@ -16,7 +16,7 @@ $idPregunta = $_POST['datos'];
 $datos = (json_decode($idPregunta, true));
 $pregunta = $datos['idPeticion'];
 
-  $sql = "DELETE FROM listaespera.peticiones WHERE idPeticion='$pregunta'";
+  $sql = "UPDATE listaespera.peticiones SET abierta=0, fechaFin=NOW() WHERE idPeticion='$pregunta'";
 
 
   if ($conn->query($sql) === TRUE) {

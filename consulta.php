@@ -14,7 +14,7 @@
 
 
 
-        $sql = "SELECT * FROM listaespera.peticiones";
+        $sql = "SELECT * FROM listaespera.peticiones WHERE abierta=1";
         $result = $conn->query($sql);
 
 

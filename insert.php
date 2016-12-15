@@ -14,11 +14,11 @@ if ($conn->connect_error) {
 
 
 $datosRecibidos = $_POST['datos'];
-$datos = (json_decode($datosRecibidos, true));
+$datos = json_decode($datosRecibidos, true);
+
 
 $usuario = $datos["usuario"];
 $pregunta = $datos["pregunta"];
-echo $usuario;
 function getRealUserIp(){
    switch(true){
      case (!empty($_SERVER['HTTP_X_REAL_IP'])) : return $_SERVER['HTTP_X_REAL_IP'];
@@ -29,7 +29,7 @@ function getRealUserIp(){
 }
 
 $ip = getRealUserIp();
-$abierto = 0;
+$abierto = 1;
 $fechaInicio = date('Y-m-d H:i:s');
 $fechaFin = "";
 
@@ -37,7 +37,7 @@ $fechaFin = "";
 $sql = "INSERT INTO listaespera.peticiones (direccionIP, usuario, texto, abierta, fechaInicio, fechaFin) VALUES ('$ip','$usuario','$pregunta', '$abierto', '$fechaInicio', '$fechaFin')";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Correcto.";
+    echo "Pregunta registrada correctamente.";
 } else {
     echo "Error: " . $conn->error;
 }
