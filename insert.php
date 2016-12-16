@@ -37,7 +37,15 @@ $fechaFin = "";
 $sql = "INSERT INTO listaespera.peticiones (direccionIP, usuario, texto, abierta, fechaInicio, fechaFin) VALUES ('$ip','$usuario','$pregunta', '$abierto', '$fechaInicio', '$fechaFin')";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Pregunta registrada correctamente.";
+
+    $last_id = $conn->insert_id;
+
+    $respuesta = array('respuesta' => $last_id);
+
+    //array_push($respuesta);
+    echo json_encode($respuesta);
+
+
 } else {
     echo "Error: " . $conn->error;
 }
