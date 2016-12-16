@@ -20,7 +20,7 @@ $pregunta = $datos['idPeticion'];
 
 
   if ($conn->query($sql) === TRUE) {
-      echo '<h2>Correcto</h2>';
+      echo 'Correcto';
   } else {
       echo '<h2>ERR</h2>';
   }

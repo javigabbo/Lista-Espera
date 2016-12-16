@@ -59,13 +59,13 @@
       xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
       var myObj = JSON.parse(this.responseText);
-
       }else{
       //alert("error: " + this.status);
       }
       };
       xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       xmlhttp.send(json_upload);
+
       infoDesplegable();
     }
 
